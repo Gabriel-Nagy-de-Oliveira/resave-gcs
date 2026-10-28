@@ -17,6 +17,7 @@ Servir como aplicação funcional e pequena para demonstrar, com Git e GitHub: c
 - **Despesas:** cadastrar, editar, excluir (com confirmação), filtrar por categoria e pesquisar por descrição.
 - **Desperdício:** registrar alimento, quantidade, unidade, motivo e data; totais separados por unidade (kg, L etc. nunca são somados entre si).
 - **Dados de exemplo:** botão no painel para carregar e remover dados demonstrativos (marcados com o selo "Exemplo").
+- - **Filtro por período (planejado):** filtrar as despesas por mês, para comparar os gastos de cada período.
 
 ## Tecnologias
 
