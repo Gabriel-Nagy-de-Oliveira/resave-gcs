@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ReSave — Controle de gastos e desperdício</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="topo-in">
+      <h1 class="marca">Re<span>Save</span></h1>
+      <nav class="nav" aria-label="Seções">
+        <button data-view="painel" aria-current="page">Painel</button>
+        <button data-view="despesas">Despesas</button>
+        <button data-view="desperdicio">Desperdício</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="view-painel">
+      <div class="titulo-pagina">
+        <div><h2>Painel</h2><p class="muted">Gastos e desperdício do restaurante em um só lugar.</p></div>
+        <div>
+          <button class="btn sec" id="btn-demo">Carregar dados de exemplo</button>
+          <button class="btn sec" id="btn-limpar-demo" hidden>Remover dados de exemplo</button>
+        </div>
+      </div>
+      <div class="indicadores">
+        <article class="ind destaque"><span>Total gasto</span><strong id="ind-total">R$ 0,00</strong></article>
+        <article class="ind"><span>Despesas cadastradas</span><strong id="ind-qtd">0</strong></article>
+        <article class="ind"><span>Gasto no mês atual</span><strong id="ind-mes">R$ 0,00</strong></article>
+        <article class="ind"><span>Média por despesa</span><strong id="ind-media">R$ 0,00</strong></article>
+        <article class="ind"><span>Categoria com maior gasto</span><strong id="ind-categoria" class="menor">—</strong></article>
+        <article class="ind desp"><span>Desperdício registrado</span><div id="ind-desperdicio"></div></article>
+      </div>
+      <div class="painel-box">
+        <h3>Despesas recentes</h3>
+        <ul class="lista" id="recentes"></ul>
+      </div>
+    </section>
+
+    <section id="view-despesas" hidden>
+      <div class="titulo-pagina"><div><h2>Despesas</h2><p class="muted">Cadastre, filtre e edite os gastos.</p></div></div>
+      <div class="duas-colunas">
+        <form id="form-despesa" class="painel-box" novalidate>
+          <h3 id="titulo-form-despesa">Nova despesa</h3>
+          <label>Descrição
+            <input name="descricao" type="text" maxlength="80" placeholder="Ex.: Compra de hortifruti">
+            <span class="erro" data-erro="descricao"></span></label>
+          <label>Categoria
+            <select name="categoria">
+              <option value="">Selecione…</option>
+              <option>Ingredientes</option><option>Bebidas</option><option>Equipamentos</option>
+              <option>Limpeza</option><option>Pessoal</option><option>Energia e água</option><option>Outros</option>
+            </select>
+            <span class="erro" data-erro="categoria"></span></label>
+          <div class="linha">
+            <label>Valor (R$)
+              <input name="valor" type="text" inputmode="decimal" placeholder="150,00">
+              <span class="erro" data-erro="valor"></span></label>
+            <label>Data
+              <input name="data" type="date">
+              <span class="erro" data-erro="data"></span></label>
+          </div>
+          <label>Observações (opcional)
+            <textarea name="obs" rows="2" maxlength="200"></textarea></label>
+          <div class="acoes-form">
+            <button type="submit" class="btn">Cadastrar despesa</button>
+            <button type="button" class="btn sec" id="cancelar-edicao" hidden>Cancelar edição</button>
+          </div>
+        </form>
+
+        <div class="painel-box">
+          <div class="filtros">
+            <input id="busca-despesa" type="search" placeholder="Pesquisar por descrição" aria-label="Pesquisar por descrição">
+            <select id="filtro-categoria" aria-label="Filtrar por categoria">
+              <option value="">Todas as categorias</option>
+              <option>Ingredientes</option><option>Bebidas</option><option>Equipamentos</option>
+              <option>Limpeza</option><option>Pessoal</option><option>Energia e água</option><option>Outros</option>
+            </select>
+          </div>
+          <p class="total-linha">Total exibido: <strong id="total-filtrado">R$ 0,00</strong></p>
+          <ul class="lista" id="lista-despesas"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-desperdicio" hidden>
+      <div class="titulo-pagina"><div><h2>Desperdício de alimentos</h2><p class="muted">Registre o que foi perdido e por quê.</p></div></div>
+      <div class="duas-colunas">
+        <form id="form-desperdicio" class="painel-box" novalidate>
+          <h3>Novo registro</h3>
+          <label>Alimento
+            <input name="alimento" type="text" maxlength="60" placeholder="Ex.: Alface">
+            <span class="erro" data-erro="alimento"></span></label>
+          <div class="linha">
+            <label>Quantidade
+              <input name="quantidade" type="text" inputmode="decimal" placeholder="2,5">
+              <span class="erro" data-erro="quantidade"></span></label>
+            <label>Unidade
+              <select name="unidade"><option value="">Selecione…</option>
+                <option>kg</option><option>g</option><option>L</option><option>mL</option><option>un</option></select>
+              <span class="erro" data-erro="unidade"></span></label>
+          </div>
+          <label>Motivo
+            <select name="motivo"><option value="">Selecione…</option>
+              <option>Vencimento</option><option>Sobra de produção</option><option>Preparo em excesso</option>
+              <option>Armazenamento inadequado</option><option>Devolução de cliente</option><option>Outro</option></select>
+            <span class="erro" data-erro="motivo"></span></label>
+          <label>Data
+            <input name="data" type="date"><span class="erro" data-erro="data"></span></label>
+          <div class="acoes-form"><button type="submit" class="btn">Registrar desperdício</button></div>
+        </form>
+        <div class="painel-box">
+          <h3>Total por unidade</h3>
+          <div id="totais-unidade" class="chips"></div>
+          <p class="muted pequeno">Unidades diferentes não são somadas entre si.</p>
+          <h3 class="espaco">Registros</h3>
+          <ul class="lista" id="lista-desperdicio"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">ReSave v1 — projeto acadêmico de GCS. Dados salvos apenas neste navegador.</footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/despesas.js"></script>
+  <script src="js/desperdicio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
