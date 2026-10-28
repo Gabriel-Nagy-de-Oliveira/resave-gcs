@@ -91,3 +91,4 @@ Versionamento semântico `MAJOR.MINOR.PATCH`: MAJOR para mudanças incompatívei
 - Os dados ficam só no navegador e no computador em uso; limpar os dados do navegador apaga tudo.
 - Não há login, múltiplos usuários nem sincronização.
 - Não há exportação de dados nesta versão.
+- A exportação das despesas em CSV está planejada para uma versão futura.
